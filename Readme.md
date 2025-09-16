@@ -1,29 +1,40 @@
-# Medidor de Luz (Luxímetro) com  Raspberry Pi Pico
+﻿# 
 
-Este projeto utiliza um Raspberry Pi Pico para criar um medidor de intensidade de luz digital (luxímetro). Ele lê os dados de um sensor de luz ambiente **BH1750** e exibe o valor em **Lux** em tempo real em um display **OLED SSD1306**.
+<h1 align="center">
+  <br>
+    <img width="200px" src="https://github.com/Ukobir/pwmControl/blob/main/imagens/logo.png">
+  <br>
+    Controle de Servomotor por Iluminação
+  <br>
+</h1>
+
+## Descrição
+
+O objetivo deste projeto é desenvolver uma ferramenta capaz de capturar os dados de iluminação ao usar o sensor GY-302 e acionar o servomotor quando o indice de luz for adequado, acima de 200 lux. Para isto, foi utilizado a placa Bitdoglab que possui as conectividades necessárias e, além disso, possui componentes físicos que auxiliam o usuário, como: display, botões, buzinas, etc.
+
+### Pré-requisitos
+
+1. **Git**: Certifique-se de ter o Git instalado no seu sistema. 
+2. **VS Code**: Instale o Visual Studio Code, um editor de código recomendado para desenvolvimento com o Raspberry Pi Pico.
+3. **Pico SDK**: Baixe e configure o SDK do Raspberry Pi Pico, conforme as instruções da documentação oficial.
+4. Tenha acesso a placa **Bitdoglab**.
+
+### Passos para Execução
+
+1. **Clonar o repositório**: Clone o repositório utilizando o comando Git no terminal:
+   
+   ```bash
+   https://github.com/Ukobir/Controle-Servomotor-Gy-302
+   ```
+2. Importar o código no VS Code com a extensão do Raspberry pi pico.
+3. Compilar o código e carregar o código na **BitDogLab**.
 
 
----
 
-## Funcionalidades
+## Testes Realizados
+Foi feito diversos testes para garantir a funcionamento devido da atividade. Além de que foi organizado o código conforme explicado em aula.
 
-* **Medição de Luz Ambiente:** Utiliza o sensor BH1750 para obter leituras precisas da intensidade luminosa (iluminância).
-* **Display em Tempo Real:** Mostra o valor atual em Lux em um display OLED I2C de 128x64 pixels.
-* **Duplo Barramento I2C:** Emprega duas portas I2C distintas do Pico: `i2c0` para o sensor e `i2c1` para o display, demonstrando o uso de múltiplos periféricos.
-* **Botão BOOTSEL:** Um botão de pressão dedicado no pino `GP6` permite entrar no modo de gravação USB sem precisar desconectar o cabo ou usar o botão da placa.
+## Vídeo de Demonstração
+[Link do Vídeo](https://drive.google.com/file/d/1mzyJ4G52h0fkXQPf_OVL8cpS8XzI0cUQ/view?usp=sharing)
 
----
-
-
-
-## Funcionamento do Código
-
-* **`main()`:** A função principal inicializa o `stdio`, as duas portas I2C, o display e o sensor BH1750. Também configura a interrupção no pino `GP6` para a função BOOTSEL.
-* **Loop Infinito:** Dentro do `while(1)`, o programa executa os seguintes passos a cada 500 milissegundos:
-    1.  Chama `bh1750_read_measurement()` para ler o valor de iluminância do sensor.
-    2.  Imprime o valor lido no console serial (útil para depuração).
-    3.  Formata o valor em uma string (ex: "1500 Lux").
-    4.  Desenha uma interface gráfica no buffer do display e adiciona a string com o valor de Lux.
-    5.  Envia o buffer para o display, atualizando a tela com as novas informações.
-* **`gpio_irq_handler()`:** Esta função de *callback* é acionada quando o botão no `GP6` é pressionado. Sua única tarefa é chamar `reset_usb_boot(0, 0)`, que reinicia o microcontrolador diretamente no modo de gravação.
 
